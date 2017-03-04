@@ -33,10 +33,6 @@ void Start::init_window()
     mk_lcd = new QLCDNumber(4,parent);
     mk_lcd->display(2);
 
-    //mk_sor = new QHBoxLayout;
-    //mk_sor->addWidget(mk_slider);
-    //mk_sor->addWidget(mk_lcd);
-
     k_label = new QLabel;
     k_label->setText(QObject::trUtf8("Csónak férőhelyeinek száma:"));
 
@@ -48,10 +44,6 @@ void Start::init_window()
 
     k_lcd = new QLCDNumber(4,parent);
     k_lcd->display(2);
-
-    //k_sor = new QHBoxLayout;
-    //k_sor->addWidget(k_slider);
-    //k_sor->addWidget(k_lcd);
 
     start_button = new QPushButton(start_text,parent);
 
