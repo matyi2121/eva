@@ -3,14 +3,8 @@
 
 #include "resourcemanager.h"
 #include <QWidget>
-#include <QSlider>
-#include <QLCDNumber>
-#include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
-#include <QStackedLayout>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 
 class Start;
 class Game;

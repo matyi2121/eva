@@ -8,18 +8,13 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QGridLayout>
-#include <QStackedLayout>
-#include <QVBoxLayout>
-#include <QHBoxLayout>
 #include <QComboBox>
-#include <QPixmap>
 #include <QMessageBox>
 
 class Game : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Game(QWidget* parent = 0);
     Game(QWidget* Parent, int Mknum, int Knum, QGridLayout* Main_layout, ResourceManager* Rcm);
     ~Game();
 private:

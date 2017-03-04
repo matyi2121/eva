@@ -1,11 +1,5 @@
 #include "game.h"
 
-Game::Game(QWidget* parent)
-    :QWidget(parent)
-{
-
-}
-
 Game::Game(QWidget* Parent,int Mknum,int Knum,QGridLayout* Main_layout, ResourceManager* Rcm)
     :QWidget(Parent),
      parent(Parent),
@@ -100,6 +94,10 @@ void Game::refresh_pics()
     mkjobb_pic->setPixmap(rcm->get_fold(QString("fold%1").arg(jobb_szam))->scaled(QSize(200,150)));
 }
 
+/*
+ * Abban az esetben, ha vannak a csónakban, átjuttatja őket a másik oldalra,
+ * és ellenőrzi, hogy sikerült-e átjutni mindenkinek a másik partra.
+*/
 void Game::atkel_clicked()
 {
     if(csonak_szam > 0)

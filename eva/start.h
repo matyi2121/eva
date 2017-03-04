@@ -26,13 +26,10 @@ private:
     QGridLayout* start_layout;
 
     QLabel* mk_label;
-    //QHBoxLayout* mk_sor;
     QSlider* mk_slider;
     QLCDNumber* mk_lcd;
 
     QLabel* k_label;
-    //az alatta levo 2-ot foglalja egybe
-    //QHBoxLayout* k_sor;
     QSlider* k_slider;
     QLCDNumber* k_lcd;
 
