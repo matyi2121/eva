@@ -1,0 +1,17 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>viz.jpg</file>
+        <file>csonak1.jpg</file>
+        <file>csonak2.jpg</file>
+        <file>csonak3.jpg</file>
+        <file>csonak4.jpg</file>
+        <file>csonak5.jpg</file>
+        <file>fold1.jpg</file>
+        <file>fold2.jpg</file>
+        <file>fold3.jpg</file>
+        <file>fold4.jpg</file>
+        <file>fold5.jpg</file>
+        <file>fold0.jpg</file>
+        <file>csonak0.jpg</file>
+    </qresource>
+</RCC>
