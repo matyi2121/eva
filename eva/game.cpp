@@ -36,6 +36,7 @@ void Game::init_window()
     game_layout->addWidget(baljobb_cb,0,0);
 
     csonakk_lb = new QLabel("Hány kannibál menjen a csónakba?");
+    csonakk_lb->setWordWrap(true);
     game_layout->addWidget(csonakk_lb,1,0);
 
     csonakk_slider = new QSlider(Qt::Horizontal,this);
@@ -58,11 +59,11 @@ void Game::init_window()
     game_layout->addWidget(bal_part,5,0);
 
     mbal_pic = new QLabel(this);
-    mbal_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(balm_szam))->scaled(150,150));
+    mbal_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(balm_szam))->scaled(200,150));
     game_layout->addWidget(mbal_pic,7,0);
 
     kbal_pic = new QLabel(this);
-    kbal_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(balk_szam))->scaled(150,150));
+    kbal_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(balk_szam))->scaled(200,150));
     game_layout->addWidget(kbal_pic,8,0);
     //kozep
     csonakk_lcd = new QLCDNumber(1,this);
@@ -96,11 +97,11 @@ void Game::init_window()
     game_layout->addWidget(jobb_part,5,3);
 
     mjobb_pic = new QLabel(this);
-    mjobb_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(jobbm_szam))->scaled(150,150));
+    mjobb_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(jobbm_szam))->scaled(200,150));
     game_layout->addWidget(mjobb_pic,7,3);
 
     kjobb_pic = new QLabel(this);
-    kjobb_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(jobbk_szam))->scaled(150,150));
+    kjobb_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(jobbk_szam))->scaled(200,150));
     game_layout->addWidget(kjobb_pic,8,3);
 
     main_layout->addLayout(game_layout,0,0);
@@ -118,10 +119,10 @@ void Game::refresh_pics()
 {
     csonakk_pic->setPixmap(rcm->get_pics(QString("kcsonak%1").arg(csonakk_szam))->scaled(QSize(200,150)));
     csonakm_pic->setPixmap(rcm->get_pics(QString("mcsonak%1").arg(csonakm_szam))->scaled(QSize(200,150)));
-    mbal_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(balm_szam))->scaled(QSize(150,150)));
-    kbal_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(balk_szam))->scaled(QSize(150,150)));
-    mjobb_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(jobbm_szam))->scaled(QSize(150,150)));
-    kjobb_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(jobbk_szam))->scaled(QSize(150,150)));
+    mbal_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(balm_szam))->scaled(QSize(200,150)));
+    kbal_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(balk_szam))->scaled(QSize(200,150)));
+    mjobb_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(jobbm_szam))->scaled(QSize(200,150)));
+    kjobb_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(jobbk_szam))->scaled(QSize(200,150)));
 }
 
 bool Game::check_lose_cond(int balk,int balm, int csonakk, int csonakm, int jobbk, int jobbm)const
