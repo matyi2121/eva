@@ -9,15 +9,14 @@ Game::Game(QWidget* Parent,int Mknum,int Knum,QGridLayout* Main_layout, Resource
      rcm(Rcm),
      cb_text1(QObject::trUtf8("balról jobbra")),
      cb_text2(QObject::trUtf8("jobbról balra")),
-     csonakba_text(QObject::trUtf8("Csónakba rak")),
-     visszarak_text(QObject::trUtf8("Visszarak")),
-     atkel_text(QObject::trUtf8("Átkel")),
-     new_game_text(QObject::trUtf8("Új játék")),
      lepes_szam(0),
      irany(""),
-     bal_szam(Mknum),
-     csonak_szam(0),
-     jobb_szam(0)
+     balk_szam(Mknum),
+     balm_szam(Mknum),
+     csonakk_szam(0),
+     csonakm_szam(0),
+     jobbk_szam(0),
+     jobbm_szam(0)
 {
     init_window();
 }
@@ -28,7 +27,7 @@ void Game::init_window()
     game_layout = new QGridLayout;
     game_layout->setHorizontalSpacing(0);
     game_layout->setVerticalSpacing(0);
-    new_game = new QPushButton(new_game_text,this);
+    new_game = new QPushButton(QObject::trUtf8("Új játék"),this);
 
     //Bal oszlop
     baljobb_cb = new QComboBox(this);
@@ -36,51 +35,79 @@ void Game::init_window()
     baljobb_cb->addItem(cb_text2);
     game_layout->addWidget(baljobb_cb,0,0);
 
-    csonak_lb = new QLabel("Hány kannibál-misszionárius menjen a csónakba?");
-    game_layout->addWidget(csonak_lb,1,0);
+    csonakk_lb = new QLabel("Hány kannibál menjen a csónakba?");
+    game_layout->addWidget(csonakk_lb,1,0);
 
-    csonak_slider = new QSlider(Qt::Horizontal,this);
-    csonak_slider->setMinimum(1);
-    csonak_slider->setMaximum(5);
-    csonak_slider->setValue(1);
-    game_layout->addWidget(csonak_slider,2,0);
+    csonakk_slider = new QSlider(Qt::Horizontal,this);
+    csonakk_slider->setMinimum(0);
+    csonakk_slider->setMaximum(5);
+    csonakk_slider->setValue(0);
+    game_layout->addWidget(csonakk_slider,2,0);
 
-    csonak_lcd = new QLCDNumber(1,this);
-    csonak_lcd->display(1);
-    game_layout->addWidget(csonak_lcd,3,0);
+    csonakm_lb = new QLabel("Hány misszionárius menjen a csónakba?");
+    csonakm_lb->setWordWrap(true);
+    game_layout->addWidget(csonakm_lb,3,0);
 
-    mkbal_pic = new QLabel(this);
-    mkbal_pic->setPixmap(rcm->get_fold(QString("fold%1").arg(bal_szam))->scaled(200,150));
-    game_layout->addWidget(mkbal_pic,4,0);
+    csonakm_slider = new QSlider(Qt::Horizontal,this);
+    csonakm_slider->setMinimum(0);
+    csonakm_slider->setMaximum(5);
+    csonakm_slider->setValue(0);
+    game_layout->addWidget(csonakm_slider,4,0);
 
+    bal_part = new QLabel("bal part");
+    game_layout->addWidget(bal_part,5,0);
+
+    mbal_pic = new QLabel(this);
+    mbal_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(balm_szam))->scaled(150,150));
+    game_layout->addWidget(mbal_pic,7,0);
+
+    kbal_pic = new QLabel(this);
+    kbal_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(balk_szam))->scaled(150,150));
+    game_layout->addWidget(kbal_pic,8,0);
     //kozep
-    folyo_pic = new QLabel(this);
-    folyo_pic->setPixmap(rcm->get_viz()->scaled(QSize(200,400)));
-    game_layout->addWidget(folyo_pic,0,1,4,1);
+    csonakk_lcd = new QLCDNumber(1,this);
+    csonakk_lcd->display(0);
+    game_layout->addWidget(csonakk_lcd,2,1);
 
-    csonak_pic = new QLabel(this);
-    csonak_pic->setPixmap(rcm->get_csonak(QString("csonak%1").arg(csonak_szam))->scaled(QSize(200,150)));
-    game_layout->addWidget(csonak_pic,4,1);
+    csonakm_lcd = new QLCDNumber(1,this);
+    csonakm_lcd->display(0);
+    game_layout->addWidget(csonakm_lcd,4,1);
+
+    csonakm_pic = new QLabel(this);
+    csonakm_pic->setPixmap(rcm->get_pics(QString("mcsonak%1").arg(csonakm_szam))->scaled(QSize(200,150)));
+    game_layout->addWidget(csonakm_pic,8,1);
+
+    csonakk_pic = new QLabel(this);
+    csonakk_pic->setPixmap(rcm->get_pics(QString("kcsonak%1").arg(csonakk_szam))->scaled(QSize(200,150)));
+    game_layout->addWidget(csonakk_pic,8,2);
     //jobb
-    game_layout->addWidget(new_game,0,2);
+    game_layout->addWidget(new_game,0,3);
 
-    csonakba = new QPushButton(csonakba_text);
-    game_layout->addWidget(csonakba,1,2);
+    csonakba = new QPushButton(QObject::trUtf8("Csónakba rak"));
+    game_layout->addWidget(csonakba,1,3);
 
-    visszarak = new QPushButton(visszarak_text);
-    game_layout->addWidget(visszarak,2,2);
+    visszarak = new QPushButton(QObject::trUtf8("Visszarak"));
+    game_layout->addWidget(visszarak,2,3);
 
-    atkel = new QPushButton(atkel_text);
-    game_layout->addWidget(atkel,3,2);
+    atkel = new QPushButton(QObject::trUtf8("Átkel"));
+    game_layout->addWidget(atkel,3,3);
 
-    mkjobb_pic = new QLabel(this);
-    mkjobb_pic->setPixmap(rcm->get_fold(QString("fold%1").arg(jobb_szam))->scaled(200,150));
-    game_layout->addWidget(mkjobb_pic,4,2);
+    jobb_part = new QLabel("jobb part");
+    game_layout->addWidget(jobb_part,5,3);
+
+    mjobb_pic = new QLabel(this);
+    mjobb_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(jobbm_szam))->scaled(150,150));
+    game_layout->addWidget(mjobb_pic,7,3);
+
+    kjobb_pic = new QLabel(this);
+    kjobb_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(jobbk_szam))->scaled(150,150));
+    game_layout->addWidget(kjobb_pic,8,3);
 
     main_layout->addLayout(game_layout,0,0);
 
     QObject::connect(new_game,SIGNAL(clicked()),parent,SLOT(newgame()));
-    QObject::connect(csonak_slider,SIGNAL(valueChanged(int)),csonak_lcd,SLOT(display(int)));
+    QObject::connect(csonakk_slider,SIGNAL(valueChanged(int)),csonakk_lcd,SLOT(display(int)));
+    QObject::connect(csonakm_slider,SIGNAL(valueChanged(int)),csonakm_lcd,SLOT(display(int)));
     QObject::connect(atkel,SIGNAL(clicked()),this,SLOT(atkel_clicked()));
     QObject::connect(visszarak,SIGNAL(clicked()),this,SLOT(visszarak_clicked()));
     QObject::connect(csonakba,SIGNAL(clicked()),this,SLOT(csonakba_clicked()));
@@ -89,36 +116,81 @@ void Game::init_window()
 }
 void Game::refresh_pics()
 {
-    csonak_pic->setPixmap(rcm->get_csonak(QString("csonak%1").arg(csonak_szam))->scaled(QSize(200,150)));
-    mkbal_pic->setPixmap(rcm->get_fold(QString("fold%1").arg(bal_szam))->scaled(QSize(200,150)));
-    mkjobb_pic->setPixmap(rcm->get_fold(QString("fold%1").arg(jobb_szam))->scaled(QSize(200,150)));
+    csonakk_pic->setPixmap(rcm->get_pics(QString("kcsonak%1").arg(csonakk_szam))->scaled(QSize(200,150)));
+    csonakm_pic->setPixmap(rcm->get_pics(QString("mcsonak%1").arg(csonakm_szam))->scaled(QSize(200,150)));
+    mbal_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(balm_szam))->scaled(QSize(150,150)));
+    kbal_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(balk_szam))->scaled(QSize(150,150)));
+    mjobb_pic->setPixmap(rcm->get_pics(QString("mfold%1").arg(jobbm_szam))->scaled(QSize(150,150)));
+    kjobb_pic->setPixmap(rcm->get_pics(QString("kfold%1").arg(jobbk_szam))->scaled(QSize(150,150)));
+}
+
+bool Game::check_lose_cond(int balk,int balm, int csonakk, int csonakm, int jobbk, int jobbm)const
+{
+    bool retVal = false;
+    if(balk > balm && balm != 0)
+    {
+        retVal = true;
+    }
+    else if(csonakk > csonakm && csonakm != 0)
+    {
+        retVal = true;
+    }
+    else if(jobbk > jobbm && jobbm != 0)
+    {
+        retVal = true;
+    }
+    return retVal;
 }
 
 /*
  * Abban az esetben, ha vannak a csónakban, átjuttatja őket a másik oldalra,
- * és ellenőrzi, hogy sikerült-e átjutni mindenkinek a másik partra.
+ * hogy ha nem halnak meg közben a misszionáriusok valamelyik oldalon.
 */
 void Game::atkel_clicked()
 {
-    if(csonak_szam > 0)
+    QMessageBox qmsg;
+    if(csonakk_szam > 0 || csonakm_szam)
     {
         if(irany == cb_text1)//balról jobbra
         {
-            jobb_szam += csonak_szam;
-            csonak_szam = 0;
-            refresh_pics();
+            if(!check_lose_cond(balk_szam,balm_szam,0,0,jobbk_szam+csonakk_szam,jobbm_szam+csonakm_szam))
+            {
+                jobbk_szam += csonakk_szam;
+                jobbm_szam += csonakm_szam;
+                csonakk_szam = 0;
+                csonakm_szam = 0;
+                refresh_pics();
+                irany = "";
+                ++lepes_szam;
+            }
+            else
+            {
+                qmsg.setText(QObject::trUtf8("Az adott lépés a valamelyik oldalon a misszionáriusok halálát okozná!"));
+                qmsg.exec();
+            }
         }
         else
         {
-            bal_szam += csonak_szam;
-            csonak_szam = 0;
-            refresh_pics();
+            if(!check_lose_cond(balk_szam+csonakk_szam,balm_szam+csonakm_szam,0,0,jobbk_szam,jobbm_szam))
+            {
+                balk_szam += csonakk_szam;
+                balm_szam += csonakm_szam;
+                csonakk_szam = 0;
+                csonakm_szam = 0;
+                refresh_pics();
+                irany = "";
+                ++lepes_szam;
+            }
+            else
+            {
+                qmsg.setText(QObject::trUtf8("Az adott lépés a valamelyik oldalon a misszionáriusok halálát okozná!"));
+                qmsg.exec();
+            }
+
         }
-        irany = "";
-        ++lepes_szam;
-        if(mknum == jobb_szam)
+
+        if(2*mknum == jobbk_szam+jobbm_szam)
         {
-            QMessageBox qmsg;
             qmsg.setText((QString(QObject::trUtf8("Gratulálok %1 átkeléssel oldottad meg!")).arg(lepes_szam)));
             qmsg.exec();
             emit victory();
@@ -126,25 +198,29 @@ void Game::atkel_clicked()
     }
     else
     {
-        QMessageBox qmsg;
         qmsg.setText(QObject::trUtf8("Nincs senki a csónakban"));
         qmsg.exec();
     }
 }
+//Megnézi, hogy vannak-e a csónakban, és ha igen akkor visszateszi a megfelelő oldalra őket.
 void Game::visszarak_clicked()
 {
-    if(csonak_szam > 0)
+    if(csonakk_szam > 0 || csonakm_szam > 0)
     {
         if(irany == cb_text1)//balról jobbra
         {
-            bal_szam += csonak_szam;
-            csonak_szam = 0;
+            balk_szam += csonakk_szam;
+            csonakk_szam = 0;
+            balm_szam += csonakm_szam;
+            csonakm_szam = 0;
             refresh_pics();
         }
         else
         {
-            jobb_szam += csonak_szam;
-            csonak_szam = 0;
+            jobbk_szam += csonakk_szam;
+            csonakk_szam = 0;
+            jobbm_szam += csonakm_szam;
+            csonakm_szam = 0;
             refresh_pics();
         }
         irany = "";
@@ -156,47 +232,87 @@ void Game::visszarak_clicked()
         qmsg.exec();
     }
 }
-
+/*
+ *Ellenőrzések:
+ * 1. Abban az esetben, ha vannak már a csónakba, akkor ugyan abból az irányból akar még a csónakba rakni?
+ * 2. Van-e annyi m-k amennyit a csónakba akar rakni az adott oldalon?
+ * 3. Van-e elég hely a csónakban?
+ * 4. Meghalnának-e a m-ok valahol, ha megtennénk az adott lépést?
+ *Ha nem volt az ellenőrzéseknél probléma, akkor:
+ * 1, Megnézni merről rakjuk be a csónakra az embereket, ha még nem lett az irány beállítva beállítjuk.
+ * 2, Kellő számú m-k-t levonni adott oldalról és csónakhoz adni.
+ * 3, Képek frissítése
+ */
 void Game::csonakba_clicked()
 {
-    if(knum > csonak_szam)
+    QString oldal = baljobb_cb->currentText();
+    int kval = csonakk_slider->value();
+    int mval = csonakm_slider->value();
+    QMessageBox qmsg;
+    bool felfer = (knum - (csonakk_szam+csonakm_szam+kval+mval)) >= 0;
+    if(irany == "" || oldal == irany)//1.
     {
-        int val = csonak_slider->value();
-        QString oldal = baljobb_cb->currentText();
-        if(oldal == irany || irany == "")
+        if(felfer)//3.
         {
-            if(irany == "")
-                irany = oldal;
-            if(oldal == cb_text1 && bal_szam >= val)//balról jobbra
+            if(oldal == cb_text1 && balk_szam >= kval && balm_szam >= mval)//2-1.
             {
-                csonak_szam += val;
-                bal_szam -= val;
-                refresh_pics();
+                if(!check_lose_cond(balk_szam-kval,balm_szam-mval,csonakk_szam+kval,csonakm_szam+mval,jobbk_szam,jobbm_szam))//4.
+                {
+                    if(irany == "")//1,
+                    {
+                        irany = oldal;
+                    }
+                    //2,
+                    balk_szam -= kval;
+                    csonakk_szam += kval;
+                    balm_szam -= mval;
+                    csonakm_szam += mval;
+                    //
+                    refresh_pics();//3,
+                }
+                else
+                {
+                    qmsg.setText(QObject::trUtf8("Az adott lépés a valamelyik oldalon vagy a csónakban a misszionáriusok halálát okozná!"));
+                    qmsg.exec();
+                }
             }
-            else if(oldal == cb_text2 && jobb_szam >= val)//jobbról balra
+            else if(oldal == cb_text2 && jobbk_szam >= kval && jobbm_szam >= mval)//2-2.
             {
-                csonak_szam += val;
-                jobb_szam -= val;
-                refresh_pics();
+                if(!check_lose_cond(balk_szam,balm_szam,csonakk_szam+kval,csonakm_szam+mval,jobbk_szam-kval,jobbm_szam-mval))//4.
+                {
+                    if(irany == "")//1,
+                    {
+                        irany = oldal;
+                    }
+                    //2,
+                    jobbk_szam -= kval;
+                    csonakk_szam += kval;
+                    jobbm_szam -= mval;
+                    csonakm_szam += mval;
+                    //
+                    refresh_pics();//3,
+                }
+                else
+                {
+                    qmsg.setText(QObject::trUtf8("Az adott lépés a valamelyik oldalon vagy a csónakban a misszionáriusok halálát okozná!"));
+                    qmsg.exec();
+                }
             }
             else
-            {//ha slider-en tobbet adna meg mint amenyi ember van az adott oldalon
-                QMessageBox qmsg;
-                qmsg.setText(QObject::trUtf8("Nincs annyi ember az adott oldalon."));
+            {
+                qmsg.setText(QObject::trUtf8("Nincs elég az adott oldalon!"));
                 qmsg.exec();
             }
         }
         else
-        {//ha masik oldalrol akarna csonakba rakni embert
-            QMessageBox qmsg;
-            qmsg.setText("Egyszerre nem szálhatnak fel mind 2 oldalról");
+        {
+            qmsg.setText(QObject::trUtf8("Nincs elég hely"));
             qmsg.exec();
         }
     }
     else
-    {//Ha nincs hely a csonakban
-        QMessageBox qmsg;
-        qmsg.setText(QObject::trUtf8("Nincs több hely a csónakban"));
+    {
+        qmsg.setText(QObject::trUtf8("Egyszerre nem lehet a csónakba rakni mind 2 irányból!"));
         qmsg.exec();
     }
 }

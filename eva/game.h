@@ -19,6 +19,8 @@ public:
     ~Game();
 private:
     void init_window();
+    void refresh_pics();
+
     QWidget* parent;
     QGridLayout* main_layout;
     int mknum;
@@ -30,35 +32,40 @@ private:
     const QString cb_text1;
     const QString cb_text2;
 
-    QString csonakba_text;
-    QString visszarak_text;
-    QString atkel_text;
-    QString new_game_text;
-
     //Bal oszlop
     QComboBox* baljobb_cb;
-    QLabel* csonak_lb;
-    QSlider* csonak_slider;
-    QLCDNumber* csonak_lcd;
-    QLabel* mkbal_pic;
+    QLabel* csonakk_lb;
+    QSlider* csonakk_slider;
+    QLCDNumber* csonakk_lcd;
+    QLabel* csonakm_lb;
+    QSlider* csonakm_slider;
+    QLCDNumber* csonakm_lcd;
+    QLabel* bal_part;
+    QLabel* kbal_pic;
+    QLabel* mbal_pic;
     //Kozep
-    QLabel* folyo_pic;
-    QLabel* csonak_pic;
+    QLabel* csonakk_pic;
+    QLabel* csonakm_pic;
     //Jobb
     QPushButton* new_game;
     QPushButton* csonakba;
     QPushButton* visszarak;
     QPushButton* atkel;
-    QLabel* mkjobb_pic;
+    QLabel* jobb_part;
+    QLabel* kjobb_pic;
+    QLabel* mjobb_pic;
 
     //logika
     int lepes_szam;
     QString irany;
-    int bal_szam;
-    int csonak_szam;
-    int jobb_szam;
+    int balk_szam;
+    int balm_szam;
+    int csonakk_szam;
+    int csonakm_szam;
+    int jobbk_szam;
+    int jobbm_szam;
+    bool check_lose_cond(int balk,int balm, int csonakk, int csonakm, int jobbk, int jobbm)const;
 
-    void refresh_pics();
 private slots:
     void atkel_clicked();
     void visszarak_clicked();

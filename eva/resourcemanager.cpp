@@ -4,21 +4,30 @@ ResourceManager::ResourceManager()
 {
     for(int i = 0; i < 6; ++i)
     {
-        csonak_pics[QString("csonak%1").arg(i)] = new QPixmap(QString(":images/csonak%1.jpg").arg(i));
-        fold_pics[QString("fold%1").arg(i)] = new QPixmap(QString(":images/fold%1.jpg").arg(i));
+        pics[QString("kcsonak%1").arg(i)] = new QPixmap(QString(":images/kcsonak%1.jpg").arg(i));
+        pics[QString("mcsonak%1").arg(i)] = new QPixmap(QString(":images/mcsonak%1.jpg").arg(i));
+        pics[QString("kfold%1").arg(i)] = new QPixmap(QString(":images/kfold%1.jpg").arg(i));
+        pics[QString("mfold%1").arg(i)] = new QPixmap(QString(":images/mfold%1.jpg").arg(i));
     }
-    viz = new QPixmap(":images/viz.jpg");
 }
 
 ResourceManager::~ResourceManager()
 {
-    for(QMap<QString,QPixmap*>::iterator i = csonak_pics.begin(); i != csonak_pics.end(); ++i)
+    for(QMap<QString,QPixmap*>::iterator i = pics.begin(); i != pics.end(); ++i)
     {
         delete i.value();
     }
-    for(QMap<QString,QPixmap*>::iterator i = fold_pics.begin(); i != fold_pics.end(); ++i)
+}
+
+const QPixmap* ResourceManager::get_pics(QString key)const
+{
+    QMap<QString,QPixmap*>::const_iterator tmp = pics.find(key);
+    if(tmp != pics.end())
     {
-        delete i.value();
+        return tmp.value();
     }
-    delete viz;
+    else
+    {
+        return NULL;
+    }
 }

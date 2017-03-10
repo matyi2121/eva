@@ -7,24 +7,9 @@ class ResourceManager
 public:
     ResourceManager();
     ~ResourceManager();
-    const QPixmap* get_csonak(QString key)const
-    {
-        QMap<QString,QPixmap*>::const_iterator tmp = csonak_pics.find(key);
-        return tmp.value();
-    }
-    QPixmap* get_viz()const
-    {
-        return viz;
-    }
-    const QPixmap* get_fold(QString key)const
-    {
-        QMap<QString,QPixmap*>::const_iterator tmp = fold_pics.find(key);
-        return tmp.value();
-    }
+    const QPixmap* get_pics(QString key)const;
 private:
-    QMap<QString,QPixmap*> csonak_pics;
-    QMap<QString,QPixmap*> fold_pics;
-    QPixmap* viz;
+    QMap<QString,QPixmap*> pics;
 };
 
 #endif // RESOURCEMANAGER_H

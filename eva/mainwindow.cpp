@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
 void MainWindow::window_init()
 {
     setWindowTitle(trUtf8("Első Beadandó"));
-    setFixedSize(800,600);
+    setFixedSize(800,640);
     main_layout = new QGridLayout(this);
     setLayout(main_layout);
     start = new Start(this,main_layout);

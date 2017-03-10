@@ -1,0 +1,29 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>kcsonak0.jpg</file>
+        <file>kcsonak1.jpg</file>
+        <file>kcsonak2.jpg</file>
+        <file>kcsonak3.jpg</file>
+        <file>kcsonak4.jpg</file>
+        <file>kcsonak5.jpg</file>
+        <file>kfold0.jpg</file>
+        <file>kfold1.jpg</file>
+        <file>kfold2.jpg</file>
+        <file>kfold3.jpg</file>
+        <file>kfold4.jpg</file>
+        <file>kfold5.jpg</file>
+        <file>mcsonak0.jpg</file>
+        <file>mcsonak1.jpg</file>
+        <file>mcsonak2.jpg</file>
+        <file>mcsonak3.jpg</file>
+        <file>mcsonak4.jpg</file>
+        <file>mcsonak5.jpg</file>
+        <file>mfold0.jpg</file>
+        <file>mfold1.jpg</file>
+        <file>mfold2.jpg</file>
+        <file>mfold3.jpg</file>
+        <file>mfold4.jpg</file>
+        <file>mfold5.jpg</file>
+        <file>pictures.qrc</file>
+    </qresource>
+</RCC>
