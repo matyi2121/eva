@@ -19,7 +19,7 @@ public:
     ~Game();
 private:
     void init_window();
-    void refresh_pics();
+    void refresh_layout();
 
     QWidget* parent;
     QGridLayout* main_layout;
@@ -29,21 +29,29 @@ private:
 
     QGridLayout* game_layout;
 
-    const QString cb_text1;
-    const QString cb_text2;
-
     //Bal oszlop
-    QComboBox* baljobb_cb;
+
     QLabel* csonakk_lb;
     QSlider* csonakk_slider;
     QLCDNumber* csonakk_lcd;
+
     QLabel* csonakm_lb;
     QSlider* csonakm_slider;
     QLCDNumber* csonakm_lcd;
+
     QLabel* bal_part;
     QLabel* kbal_pic;
     QLabel* mbal_pic;
     //Kozep
+    QLabel* baljobb_lb;
+
+    QLabel* leszallk_lb;
+    QSlider* leszallk_slider;
+    QLCDNumber* leszallk_lcd;
+    QLabel* leszallm_lb;
+    QSlider* leszallm_slider;
+    QLCDNumber* leszallm_lcd;
+
     QLabel* csonakk_pic;
     QLabel* csonakm_pic;
     //Jobb
@@ -56,6 +64,8 @@ private:
     QLabel* mjobb_pic;
 
     //logika
+    const QString jobbra;
+    const QString balra;
     int lepes_szam;
     QString irany;
     int balk_szam;
