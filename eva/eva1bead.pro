@@ -16,12 +16,14 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     start.cpp \
     game.cpp \
-    resourcemanager.cpp
+    resourcemanager.cpp \
+    gamemanager.cpp
 
 HEADERS  += mainwindow.h \
     start.h \
     game.h \
-    resourcemanager.h
+    resourcemanager.h \
+    gamemanager.h
 
 FORMS    += mainwindow.ui
 

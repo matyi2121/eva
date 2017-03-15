@@ -2,6 +2,7 @@
 #define GAME_H
 
 #include "resourcemanager.h"
+#include "gamemanager.h"
 #include <QWidget>
 #include <QSlider>
 #include <QLCDNumber>
@@ -19,67 +20,57 @@ public:
     ~Game();
 private:
     void init_window();
+    void left_col();
+    void mid_col();
+    void right_col();
     void refresh_layout();
 
     QWidget* parent;
+    const char cann;
+    const char miss;
     QGridLayout* main_layout;
-    int mknum;
-    int knum;
+
     ResourceManager* rcm;
+    GameManager* gm;
 
-    QGridLayout* game_layout;
+    //left oszlop
 
-    //Bal oszlop
+    QLabel* boatc_lb;
+    QSlider* boatc_slider;
+    QLCDNumber* boatc_lcd;
 
-    QLabel* csonakk_lb;
-    QSlider* csonakk_slider;
-    QLCDNumber* csonakk_lcd;
+    QLabel* boatm_lb;
+    QSlider* boatm_slider;
+    QLCDNumber* boatm_lcd;
 
-    QLabel* csonakm_lb;
-    QSlider* csonakm_slider;
-    QLCDNumber* csonakm_lcd;
-
-    QLabel* bal_part;
-    QLabel* kbal_pic;
-    QLabel* mbal_pic;
+    QLabel* left_part;
+    QLabel* cleft_pic;
+    QLabel* mleft_pic;
     //Kozep
-    QLabel* baljobb_lb;
+    QLabel* leftright_lb;
 
-    QLabel* leszallk_lb;
-    QSlider* leszallk_slider;
-    QLCDNumber* leszallk_lcd;
-    QLabel* leszallm_lb;
-    QSlider* leszallm_slider;
-    QLCDNumber* leszallm_lcd;
+    QLabel* get_offc_lb;
+    QSlider* get_offc_slider;
+    QLCDNumber* get_offc_lcd;
+    QLabel* get_offm_lb;
+    QSlider* get_offm_slider;
+    QLCDNumber* get_offm_lcd;
 
-    QLabel* csonakk_pic;
-    QLabel* csonakm_pic;
-    //Jobb
+    QLabel* boatc_pic;
+    QLabel* boatm_pic;
+    //right
     QPushButton* new_game;
-    QPushButton* csonakba;
-    QPushButton* visszarak;
-    QPushButton* atkel;
-    QLabel* jobb_part;
-    QLabel* kjobb_pic;
-    QLabel* mjobb_pic;
-
-    //logika
-    const QString jobbra;
-    const QString balra;
-    int lepes_szam;
-    QString irany;
-    int balk_szam;
-    int balm_szam;
-    int csonakk_szam;
-    int csonakm_szam;
-    int jobbk_szam;
-    int jobbm_szam;
-    bool check_lose_cond(int balk,int balm, int csonakk, int csonakm, int jobbk, int jobbm)const;
+    QPushButton* into_boat;
+    QPushButton* put_back;
+    QPushButton* ferry;
+    QLabel* right_part;
+    QLabel* kright_pic;
+    QLabel* mright_pic;
 
 private slots:
-    void atkel_clicked();
-    void visszarak_clicked();
-    void csonakba_clicked();
+    void ferry_clicked();
+    void put_back_clicked();
+    void into_boat_clicked();
 signals:
     void victory();
 };

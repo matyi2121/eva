@@ -23,8 +23,6 @@ private:
     QWidget* parent;
     QGridLayout* main_layout;
 
-    QGridLayout* start_layout;
-
     QLabel* mk_label;
     QSlider* mk_slider;
     QLCDNumber* mk_lcd;

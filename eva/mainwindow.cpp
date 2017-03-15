@@ -15,6 +15,8 @@ void MainWindow::window_init()
     setWindowTitle(trUtf8("Első Beadandó"));
     setFixedSize(800,640);
     main_layout = new QGridLayout(this);
+    main_layout->setHorizontalSpacing(0);
+    main_layout->setVerticalSpacing(0);
     setLayout(main_layout);
     start = new Start(this,main_layout);
 }
@@ -29,8 +31,11 @@ void MainWindow::startgame()
 }
 void MainWindow::newgame()
 {
-    delete game;
-    game = 0;
+    if(game != 0)
+    {
+        delete game;
+        game = 0;
+    }
     start = new Start(this,main_layout);
 }
 
