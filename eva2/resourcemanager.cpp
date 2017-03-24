@@ -15,6 +15,10 @@ ResourceManager::ResourceManager()
 const QPixmap* ResourceManager::get_picture(QString key)const
 {
     QMap<QString,QPixmap*>::const_iterator tmp = pictures.find(key);
+    if(tmp == pictures.end())
+    {
+        throw Exceptions::NO_SUCH_PICTURE;
+    }
     return tmp.value();
 }
 

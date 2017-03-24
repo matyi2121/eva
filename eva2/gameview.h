@@ -7,6 +7,7 @@
 #include <QVector>
 #include <QLabel>
 #include "resourcemanager.h"
+#include "gamemodel.h"
 class GameView : public QWidget
 {
     Q_OBJECT
@@ -17,12 +18,15 @@ private:
     QWidget* parent;
     QGridLayout* main_layout;
     ResourceManager* rcm;
+    GameModel* gm;
     int n;
     QVector<QLabel*> squares;
     QPushButton* new_game_button;
 signals:
-
+    void new_game();
 public slots:
+    void game_over(GameModel::Collision);
+    void refresh(Coord prev_pos, Coord curr_pos, QString player_id);
 };
 
 #endif // GAMEVIEW_H

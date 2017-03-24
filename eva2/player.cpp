@@ -1,6 +1,6 @@
 #include "player.h"
 
-Player::Player(int pid, Coord start_pos, Coord direction)
+Player::Player(QString pid, Coord start_pos, Coord direction)
     :id(pid),
      pos(start_pos),
      dir(direction)
@@ -18,7 +18,17 @@ Coord Player::get_dir()const
     return dir;
 }
 
-Coord Player::get_id()const
+QString Player::get_id()const
 {
     return id;
+}
+
+void Player::set_dir(Coord Dir)
+{
+    dir = Dir;
+}
+
+void Player::step()
+{
+    pos = pos + dir;
 }

@@ -17,7 +17,6 @@ SOURCES += main.cpp \
     gameview.cpp \
     gamemodel.cpp \
     startview.cpp \
-    startmodel.cpp \
     resourcemanager.cpp \
     player.cpp
 
@@ -26,7 +25,6 @@ HEADERS  += \
     gameview.h \
     gamemodel.h \
     startview.h \
-    startmodel.h \
     resourcemanager.h \
     player.h
 

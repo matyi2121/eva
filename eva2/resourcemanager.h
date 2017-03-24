@@ -8,6 +8,11 @@ public:
     ResourceManager();
     ~ResourceManager();
     const QPixmap* get_picture(QString key)const;
+    enum class Exceptions
+    {
+        NO_SUCH_PICTURE
+    };
+
 private:
     QMap<QString,QPixmap*> pictures;
 };
