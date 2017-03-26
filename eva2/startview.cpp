@@ -6,7 +6,6 @@ StartView::StartView(QGridLayout* Main_layout,QWidget *Parent)
       main_layout(Main_layout),
       smallest_n(12)
 {
-
     size_cb = new QComboBox();
     for(int i = 1; i < 4; ++i)
     {

@@ -12,7 +12,7 @@ Tron::Tron(QWidget *parent)
     main_layout = new QGridLayout;
     main_layout->setHorizontalSpacing(0);
     main_layout->setVerticalSpacing(0);
-    main_layout->setSizeConstraint(QLayout::SetFixedSize);
+
     this->setFocusPolicy(Qt::StrongFocus);
     setLayout(main_layout);
     start_view = new StartView(main_layout,this);
@@ -24,6 +24,7 @@ void Tron::new_game()
     delete game_view;
     game_view = nullptr;
     start_view = new StartView(main_layout,this);
+    QWidget::adjustSize();
     n = 0;
 }
 

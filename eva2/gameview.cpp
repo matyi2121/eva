@@ -16,6 +16,7 @@ GameView::GameView(QGridLayout *Main_layout,int N, ResourceManager* Rcm, QWidget
         {
             l = new QLabel();
             l->setPixmap(rcm->get_picture("bg")->scaled(QSize(20,20)));
+            l->setScaledContents(true);
             main_layout->addWidget(l,i,j);
             squares.push_back(l);
         }
