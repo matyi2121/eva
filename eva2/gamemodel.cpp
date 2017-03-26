@@ -16,6 +16,13 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     players.resize(2);
     players[0] = new Player(p1id,start_p1,right);
     players[1] = new Player(p2id,start_p2,left);
+
+    emit init_players(players[0]->get_id(),players[0]->get_pos(),players[0]->get_dir(),
+                      players[1]->get_id(),players[1]->get_pos(),players[1]->get_dir());
+
+    timer = new QTimer();
+    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(next_round()));
+    timer->start(500);
 }
 
 GameModel::Collision GameModel::collision_check()const
@@ -25,7 +32,8 @@ GameModel::Collision GameModel::collision_check()const
     {
         player_collides[i] = false;
     }
-
+    //szamolhatod hogy hany hamis van
+    //abbol kideritheto egybol, hogy 0 vagy mind utkozik
     Coord next_pos;
     for(int i = 0; i < players.size(); ++i)
     {
@@ -86,7 +94,7 @@ void GameModel::next_round()
         {
             player_id = players[i]->get_id();
             curr_pos = players[i]->get_pos();
-            dir = players[i]->get_pos();
+            dir = players[i]->get_dir();
             next_pos = curr_pos + dir;
 
             players[i]->step();
@@ -104,6 +112,7 @@ void GameModel::next_round()
 
 GameModel::~GameModel()
 {
+    timer->stop();
     for(auto i : players)
         delete i;
 }

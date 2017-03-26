@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QVector>
+#include <QTimer>
 #include "player.h"
 
 class GameModel : public QObject
@@ -32,6 +33,8 @@ private:
     int height;
     int width;
 
+    QTimer* timer;
+
     Coord right = Coord(1,0);
     Coord left = Coord(-1,0);
     Coord up = Coord(0,-1);
@@ -44,9 +47,10 @@ private:
     bool is_wall(Coord c)const;
     bool is_player(Coord c)const;
 signals:
-    void collision(Collision);
+    void collision(GameModel::Collision);
     //prev_pos curr_pos player_id
     void step(Coord,Coord,QString);
+    void init_players(QString,Coord,Coord,QString,Coord,Coord);
 public slots:
     void next_round();//timer hivja majd meg
 };
