@@ -1,5 +1,5 @@
 #include "gamemodel.h"
-
+#include <QMessageBox>
 GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     :height(Height),
       width(Width)
@@ -23,6 +23,59 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     timer = new QTimer();
     QObject::connect(timer,SIGNAL(timeout()),this,SLOT(next_round()));
     timer->start(500);
+}
+
+void GameModel::change_dir(char button)
+{
+    if(toupper(button) == button && players[1]->changed_this_round)
+        return;
+    else if(toupper(button) != button && players[0]->changed_this_round)
+        return;
+
+    switch (button) {
+    case 'w':
+        players[0]->set_dir(up);
+        players[0]->changed_this_round = true;
+        break;
+    case 'a':
+        players[0]->set_dir(left);
+        players[0]->changed_this_round = true;
+        break;
+    case 's':
+        players[0]->set_dir(down);
+        players[0]->changed_this_round = true;
+        break;
+    case 'd':
+        players[0]->set_dir(right);
+        players[0]->changed_this_round = true;
+        break;
+    case 'U':
+        players[1]->set_dir(up);
+        players[1]->changed_this_round = true;
+        break;
+    case 'L':
+        players[1]->set_dir(left);
+        players[1]->changed_this_round = true;
+        break;
+    case 'D':
+        players[1]->set_dir(down);
+        players[1]->changed_this_round = true;
+        break;
+    case 'R':
+        players[1]->set_dir(right);
+        players[1]->changed_this_round = true;
+        break;
+    default:
+        timer->stop();
+        QMessageBox qmsg;
+        qmsg.setText(QObject::trUtf8("Press Ok, to resume the game."));
+        qmsg.exec();
+
+        emit set_focus();
+
+        timer->start(500);
+        break;
+    }
 }
 
 GameModel::Collision GameModel::collision_check()const
@@ -68,17 +121,16 @@ GameModel::Collision GameModel::collision_check()const
 
 bool GameModel::is_wall(Coord c)const
 {
-    return fields[c.y][c.x] == Field::wall
-         || c.y == height
+    return c.y == height
+         || c.x == -1
          || c.y == -1
          || c.x == width
-         || c.x == -1;
+         || fields[c.y][c.x] == Field::wall;
 }
 
 bool GameModel::is_player(Coord c)const
 {
-    return fields[c.y][c.x] == Field::player1
-         ||fields[c.y][c.x] == Field::player2;
+    return fields[c.y][c.x] == Field::player;
 }
 
 void GameModel::next_round()
@@ -98,8 +150,10 @@ void GameModel::next_round()
             next_pos = curr_pos + dir;
 
             players[i]->step();
+            players[i]->changed_this_round = false;
 
             fields[curr_pos.y][curr_pos.x] = Field::wall;
+            fields[next_pos.y][next_pos.x] = Field::player;
             //refresh layout
             emit step(curr_pos, next_pos, player_id);
         }

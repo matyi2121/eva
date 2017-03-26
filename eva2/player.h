@@ -15,6 +15,19 @@ struct Coord
     {
         return Coord(a.x-b.x, a.y-b.y);
     }
+    friend inline Coord operator*(int a, Coord b)
+    {
+        return Coord(a*b.x,a*b.y);
+    }
+    friend inline bool operator==(Coord a, Coord b)
+    {
+        return (a.x == b.x) && (a.y == b.y);
+    }
+    friend inline bool operator!=(Coord a, Coord b)
+    {
+        return !(a == b);
+    }
+
     int x;
     int y;
 };
@@ -29,6 +42,7 @@ public:
     QString get_id()const;
     void set_dir(Coord dir);
     void step();
+    bool changed_this_round;
 private:
     QString id;
     Coord pos;

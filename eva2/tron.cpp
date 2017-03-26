@@ -1,4 +1,8 @@
 #include "tron.h"
+#include <QMouseEvent>
+#include <QApplication>
+#include <QMessageBox>
+
 Tron::Tron(QWidget *parent)
     : QWidget(parent),
       game_view(0),
@@ -9,7 +13,7 @@ Tron::Tron(QWidget *parent)
     main_layout->setHorizontalSpacing(0);
     main_layout->setVerticalSpacing(0);
     main_layout->setSizeConstraint(QLayout::SetFixedSize);
-
+    this->setFocusPolicy(Qt::StrongFocus);
     setLayout(main_layout);
     start_view = new StartView(main_layout,this);
 
@@ -33,6 +37,46 @@ void Tron::start_game()
 void Tron::change_n(int N)
 {
     n = N;
+}
+
+void Tron::keyPressEvent(QKeyEvent *event)
+{
+    if(event->key() == Qt::Key_P)
+    {
+        game_view->forward_key('p');
+    }
+    else if(event->key() == Qt::Key_W)
+    {
+        game_view->forward_key('w');
+    }
+    else if(event->key() == Qt::Key_A)
+    {
+        game_view->forward_key('a');
+    }
+    else if(event->key() == Qt::Key_S)
+    {
+        game_view->forward_key('s');
+    }
+    else if(event->key() == Qt::Key_D)
+    {
+        game_view->forward_key('d');
+    }
+    else if(event->key() == Qt::Key_Up)
+    {
+        game_view->forward_key('U');
+    }
+    else if(event->key() == Qt::Key_Left)
+    {
+        game_view->forward_key('L');
+    }
+    else if(event->key() == Qt::Key_Down)
+    {
+        game_view->forward_key('D');
+    }
+    else if(event->key() == Qt::Key_Right)
+    {
+        game_view->forward_key('R');
+    }
 }
 
 Tron::~Tron()

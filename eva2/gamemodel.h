@@ -19,12 +19,11 @@ public:
     };
     enum class Field
     {
-        empty = -1,
-        wall = 0,
-        player1 = 1,
-        player2 = 2,
+        empty,
+        wall,
+        player
     };
-
+    void change_dir(char button);
     GameModel(QString p1id,QString p2id,int Height, int Width);
     ~GameModel();
 private:
@@ -51,6 +50,7 @@ signals:
     //prev_pos curr_pos player_id
     void step(Coord,Coord,QString);
     void init_players(QString,Coord,Coord,QString,Coord,Coord);
+    void set_focus();
 public slots:
     void next_round();//timer hivja majd meg
 };

@@ -1,5 +1,6 @@
 #include "gameview.h"
 #include <QMessageBox>
+
 GameView::GameView(QGridLayout *Main_layout,int N, ResourceManager* Rcm, QWidget *Parent)
     : QWidget(Parent),
       parent(Parent),
@@ -24,11 +25,18 @@ GameView::GameView(QGridLayout *Main_layout,int N, ResourceManager* Rcm, QWidget
 
     new_game_button = new QPushButton(QObject::trUtf8("Új játék"));
     main_layout->addWidget(new_game_button,n,0,1,n);
+
+    QObject::connect(gm,SIGNAL(set_focus()),this,SLOT(set_focus()));
     QObject::connect(gm,SIGNAL(init_players(QString,Coord,Coord,QString,Coord,Coord)),this,SLOT(init_players(QString,Coord,Coord,QString,Coord,Coord)));
     QObject::connect(new_game_button,SIGNAL(clicked()),parent,SLOT(new_game()));
     QObject::connect(this,SIGNAL(new_game()),parent,SLOT(new_game()));
     QObject::connect(gm,SIGNAL(collision(GameModel::Collision)),this,SLOT(game_over(GameModel::Collision)));
     QObject::connect(gm,SIGNAL(step(Coord,Coord,QString)),this,SLOT(refresh(Coord,Coord,QString)));
+}
+
+void GameView::forward_key(char button)
+{
+    gm->change_dir(button);
 }
 
 void GameView::game_over(GameModel::Collision c)
@@ -78,6 +86,11 @@ void GameView::init_players(QString p1_id,Coord p1_pos,Coord p1_dir,QString p2_i
 
     tmp = dynamic_cast<QLabel*>(main_layout->itemAtPosition(p2_pos.y,p2_pos.x)->widget());
     tmp->setPixmap(rcm->get_picture( QString("%1%2%3").arg(p2_id).arg(p2_dir.x).arg(p2_dir.y))->scaled(QSize(20,20)));
+}
+
+void GameView::set_focus()
+{
+    this->setFocus();
 }
 
 GameView::~GameView()

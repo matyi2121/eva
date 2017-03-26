@@ -19,7 +19,7 @@ private:
     GameView* game_view;
     QGridLayout* main_layout;
     int n;
-
+    void keyPressEvent(QKeyEvent *event);
 public slots:
     void new_game();
     void change_n(int N);
