@@ -40,7 +40,7 @@ public:
     Coord get_pos()const;
     Coord get_dir()const;
     QString get_id()const;
-    void set_dir(Coord dir);
+    bool set_dir(Coord dir);
     void step();
     bool changed_this_round;
 private:

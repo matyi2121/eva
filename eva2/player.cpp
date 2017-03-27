@@ -23,12 +23,17 @@ QString Player::get_id()const
     return id;
 }
 
-void Player::set_dir(Coord Dir)
+bool Player::set_dir(Coord Dir)
 {
+    if(dir == Dir)
+    {
+        return false;
+    }
     if(dir != -1*Dir)
     {
         dir = Dir;
     }
+    return true;
 }
 
 void Player::step()

@@ -34,36 +34,36 @@ void GameModel::change_dir(char button)
 
     switch (button) {
     case 'w':
-        players[0]->set_dir(up);
-        players[0]->changed_this_round = true;
+        if(players[0]->set_dir(up))
+            players[0]->changed_this_round = true;
         break;
     case 'a':
-        players[0]->set_dir(left);
-        players[0]->changed_this_round = true;
+        if (players[0]->set_dir(left))
+            players[0]->changed_this_round = true;
         break;
     case 's':
-        players[0]->set_dir(down);
-        players[0]->changed_this_round = true;
+        if(players[0]->set_dir(down))
+            players[0]->changed_this_round = true;
         break;
     case 'd':
-        players[0]->set_dir(right);
-        players[0]->changed_this_round = true;
+        if(players[0]->set_dir(right))
+            players[0]->changed_this_round = true;
         break;
     case 'U':
-        players[1]->set_dir(up);
-        players[1]->changed_this_round = true;
+        if(players[1]->set_dir(up))
+            players[1]->changed_this_round = true;
         break;
     case 'L':
-        players[1]->set_dir(left);
-        players[1]->changed_this_round = true;
+        if(players[1]->set_dir(left))
+            players[1]->changed_this_round = true;
         break;
     case 'D':
-        players[1]->set_dir(down);
-        players[1]->changed_this_round = true;
+        if(players[1]->set_dir(down))
+            players[1]->changed_this_round = true;
         break;
     case 'R':
-        players[1]->set_dir(right);
-        players[1]->changed_this_round = true;
+        if(players[1]->set_dir(right))
+            players[1]->changed_this_round = true;
         break;
     default:
         timer->stop();
