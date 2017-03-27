@@ -20,9 +20,9 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     emit init_players(players[0]->get_id(),players[0]->get_pos(),players[0]->get_dir(),
                       players[1]->get_id(),players[1]->get_pos(),players[1]->get_dir());
 
-    timer = new QTimer();
-    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(next_round()));
-    timer->start(500);
+    //timer = new QTimer();
+    //QObject::connect(timer,SIGNAL(timeout()),this,SLOT(next_round()));
+    //timer->start(500);
 }
 
 void GameModel::change_dir(char button)
@@ -66,14 +66,14 @@ void GameModel::change_dir(char button)
             players[1]->changed_this_round = true;
         break;
     default:
-        timer->stop();
+        //timer->stop();
         QMessageBox qmsg;
         qmsg.setText(QObject::trUtf8("Press Ok, to resume the game."));
         qmsg.exec();
 
         emit set_focus();
 
-        timer->start(500);
+        //timer->start(500);
         break;
     }
 }
@@ -166,7 +166,7 @@ void GameModel::next_round()
 
 GameModel::~GameModel()
 {
-    timer->stop();
+    //timer->stop();
     for(auto i : players)
         delete i;
 }
