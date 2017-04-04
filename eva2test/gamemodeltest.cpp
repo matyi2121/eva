@@ -28,6 +28,7 @@ void gamemodeltest::initTestCase()
 void gamemodeltest::is_wall()
 {
     QCOMPARE(gm->is_wall(Coord(100,100)),true);
+    QCOMPARE(gm->is_wall(Coord(3,3)),false);
 }
 
 void gamemodeltest::is_player()
