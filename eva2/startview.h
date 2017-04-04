@@ -17,11 +17,13 @@ private:
     QGridLayout* main_layout;
     QComboBox* size_cb;
     QPushButton* start_button;
+    QPushButton* controls_button;
     const int smallest_n;
     int n;
 signals:
 
 public slots:
+    void controls();
 };
 
 #endif // START_H
