@@ -35,14 +35,13 @@ struct Coord
 class Player
 {
 public:
-
     Player(QString pid, Coord start_pos, Coord direction);
     Coord get_pos()const;
     Coord get_dir()const;
     QString get_id()const;
-    bool set_dir(Coord dir);
+    void set_dir(Coord dir, Coord last_dir);
     void step();
-    bool changed_this_round;
+    bool first_round;
 
     QString id;
     Coord pos;

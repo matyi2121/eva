@@ -42,6 +42,9 @@ private:
     Coord start_p1 = Coord(0,height/2);
     Coord start_p2 = Coord(width-1,height/2);
 
+    Coord dir_p1;
+    Coord dir_p2;
+
     Collision collision_check()const;
     bool is_wall(Coord c)const;
     bool is_player(Coord c)const;

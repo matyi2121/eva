@@ -17,8 +17,11 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     players[0] = new Player(p1id,start_p1,right);
     players[1] = new Player(p2id,start_p2,left);
 
-    fields[players[0]->pos.y][players[0]->pos.x] = Field::player;
-    fields[players[1]->pos.y][players[1]->pos.x] = Field::player;
+    dir_p1 = right;
+    dir_p2 = left;
+
+    fields[start_p1.y][start_p1.x] = Field::player;
+    fields[start_p2.y][start_p2.x] = Field::player;
 
     emit init_players(players[0]->get_id(),players[0]->get_pos(),players[0]->get_dir(),
                       players[1]->get_id(),players[1]->get_pos(),players[1]->get_dir());
@@ -30,43 +33,35 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
 
 void GameModel::change_dir(char button)
 {
-    if(toupper(button) == button && players[1]->changed_this_round)
+    if(toupper(button) == button && players[1]->first_round)
         return;
-    else if(toupper(button) != button && players[0]->changed_this_round)
+    else if(toupper(button) != button && players[0]->first_round)
         return;
 
     switch (button) {
     case 'w':
-        if(players[0]->set_dir(up))
-            players[0]->changed_this_round = true;
+        players[0]->set_dir(up,dir_p1);
         break;
     case 'a':
-        if (players[0]->set_dir(left))
-            players[0]->changed_this_round = true;
+        players[0]->set_dir(left,dir_p1);
         break;
     case 's':
-        if(players[0]->set_dir(down))
-            players[0]->changed_this_round = true;
+        players[0]->set_dir(down,dir_p1);
         break;
     case 'd':
-        if(players[0]->set_dir(right))
-            players[0]->changed_this_round = true;
+        players[0]->set_dir(right,dir_p1);
         break;
     case 'U':
-        if(players[1]->set_dir(up))
-            players[1]->changed_this_round = true;
+        players[1]->set_dir(up,dir_p2);
         break;
     case 'L':
-        if(players[1]->set_dir(left))
-            players[1]->changed_this_round = true;
+        players[1]->set_dir(left,dir_p2);
         break;
     case 'D':
-        if(players[1]->set_dir(down))
-            players[1]->changed_this_round = true;
+        players[1]->set_dir(down,dir_p2);
         break;
     case 'R':
-        if(players[1]->set_dir(right))
-            players[1]->changed_this_round = true;
+        players[1]->set_dir(right,dir_p2);
         break;
     default:
         timer->stop();
@@ -147,19 +142,22 @@ void GameModel::next_round()
     {
         for(int i = 0; i < players.size(); ++i)
         {
+
             player_id = players[i]->get_id();
             curr_pos = players[i]->get_pos();
             dir = players[i]->get_dir();
             next_pos = curr_pos + dir;
 
             players[i]->step();
-            players[i]->changed_this_round = false;
+            players[i]->first_round = false;
 
             fields[curr_pos.y][curr_pos.x] = Field::wall;
             fields[next_pos.y][next_pos.x] = Field::player;
             //refresh layout
             emit step(curr_pos, next_pos, player_id);
         }
+        dir_p1 = players[0]->get_dir();
+        dir_p2 = players[1]->get_dir();
     }
     else
     {

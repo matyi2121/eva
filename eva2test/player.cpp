@@ -5,7 +5,7 @@ Player::Player(QString pid, Coord start_pos, Coord direction)
      pos(start_pos),
      dir(direction)
 {
-    changed_this_round = true;
+    first_round = true;
 }
 
 Coord Player::get_pos()const
@@ -23,17 +23,12 @@ QString Player::get_id()const
     return id;
 }
 
-bool Player::set_dir(Coord Dir)
+void Player::set_dir(Coord Dir,Coord last_dir)
 {
-    if(dir == Dir)
-    {
-        return false;
-    }
-    if(dir != -1*Dir)
+    if(last_dir != -1*Dir)
     {
         dir = Dir;
     }
-    return true;
 }
 
 void Player::step()
