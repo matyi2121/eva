@@ -43,7 +43,7 @@ public:
     bool set_dir(Coord dir);
     void step();
     bool changed_this_round;
-private:
+
     QString id;
     Coord pos;
     Coord dir;

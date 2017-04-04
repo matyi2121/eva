@@ -14,6 +14,7 @@ private Q_SLOTS:
     void initTestCase();
     void is_wall();
     void is_player();
+    void changeDirTest();
     void cleanupTestCase();
 };
 
@@ -32,6 +33,19 @@ void gamemodeltest::is_wall()
 void gamemodeltest::is_player()
 {
     QCOMPARE(gm->is_player(Coord(0,0)),false);
+    QCOMPARE(gm->is_player(Coord(gm->width-1,gm->height/2)),true);
+}
+
+void gamemodeltest::changeDirTest()
+{
+    gm->change_dir('d');
+    QCOMPARE(gm->players[0]->dir,gm->right);
+    gm->change_dir('a');
+    //jobbra megy es balra akarna menni
+    QCOMPARE(gm->players[0]->dir,gm->right);
+    //elso korben nem lehet iranyt valtoztatni
+    gm->change_dir('w');
+    QCOMPARE(gm->players[0]->dir,gm->right);
 }
 
 void gamemodeltest::cleanupTestCase()

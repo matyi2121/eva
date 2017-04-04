@@ -17,6 +17,9 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     players[0] = new Player(p1id,start_p1,right);
     players[1] = new Player(p2id,start_p2,left);
 
+    fields[players[0]->pos.y][players[0]->pos.x] = Field::player;
+    fields[players[1]->pos.y][players[1]->pos.x] = Field::player;
+
     emit init_players(players[0]->get_id(),players[0]->get_pos(),players[0]->get_dir(),
                       players[1]->get_id(),players[1]->get_pos(),players[1]->get_dir());
 
