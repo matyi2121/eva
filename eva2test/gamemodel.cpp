@@ -20,8 +20,8 @@ GameModel::GameModel(QString p1id,QString p2id, int Height, int Width)
     emit init_players(players[0]->get_id(),players[0]->get_pos(),players[0]->get_dir(),
                       players[1]->get_id(),players[1]->get_pos(),players[1]->get_dir());
 
-    //timer = new QTimer();
-    //QObject::connect(timer,SIGNAL(timeout()),this,SLOT(next_round()));
+    timer = new QTimer();
+    QObject::connect(timer,SIGNAL(timeout()),this,SLOT(next_round()));
     //timer->start(500);
 }
 

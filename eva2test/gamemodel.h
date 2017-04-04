@@ -26,12 +26,13 @@ public:
     void change_dir(char button);
     GameModel(QString p1id,QString p2id,int Height, int Width);
     ~GameModel();
+
     QVector<Player*> players;
     QVector<QVector<Field> > fields;
     int height;
     int width;
 
-    //QTimer* timer;
+    QTimer* timer;
 
     Coord right = Coord(1,0);
     Coord left = Coord(-1,0);

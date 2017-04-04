@@ -11,16 +11,16 @@ public:
     GameModel* gm;
 
 private Q_SLOTS:
-    void init();
+    void initTestCase();
     void is_wall();
     void is_player();
-    void del();
+    void cleanupTestCase();
 };
 
 gamemodeltest::gamemodeltest()
 {
 }
-void gamemodeltest::init()
+void gamemodeltest::initTestCase()
 {
     gm = new GameModel("p1","p2",12,12);
 }
@@ -34,7 +34,7 @@ void gamemodeltest::is_player()
     QCOMPARE(gm->is_player(Coord(0,0)),false);
 }
 
-void gamemodeltest::del()
+void gamemodeltest::cleanupTestCase()
 {
     delete gm;
 }
