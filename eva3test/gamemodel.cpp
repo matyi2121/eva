@@ -1,5 +1,4 @@
 #include "gamemodel.h"
-#include <QMessageBox>
 GameModel::GameModel(ResourceManager* RM,int N,QObject *parent)
     : QObject(parent),
       count_same_turns(0),

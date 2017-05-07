@@ -5,7 +5,7 @@ ResourceManager::ResourceManager(){}
 
 bool ResourceManager::save_game(int n,
                                 int turn,
-                                int wcm,
+                                int count_same_turns,
                                 int blue_coll,
                                 QVector<int>& blue_fields,
                                 int red_coll,
@@ -18,7 +18,7 @@ bool ResourceManager::save_game(int n,
 
     stream << n << endl;
     stream << turn << endl;
-    stream << wcm << endl;
+    stream << count_same_turns << endl;
     stream << blue_coll << endl;
     for(int i = 0; i < n; ++i)
     {
@@ -36,7 +36,7 @@ bool ResourceManager::save_game(int n,
 
 bool ResourceManager::load_game(int& n,
                                 Field& turn,
-                                bool& will_come_again,
+                                int& count_same_turns,
                                 int& blue_coll,
                                 QVector<int>& blue_fields,
                                 int& red_coll,
@@ -59,15 +59,7 @@ bool ResourceManager::load_game(int& n,
         turn = Field::Red;
     }
 
-    int l = stream.readLine().toInt();
-    if(l == 1)
-    {
-        will_come_again = true;
-    }
-    else
-    {
-        will_come_again = false;
-    }
+    count_same_turns = stream.readLine().toInt();
 
     blue_fields.resize(n);
     red_fields.resize(n);
