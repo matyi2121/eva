@@ -3,17 +3,13 @@
 #include "resourcemanager.h"
 #include <QObject>
 #include <QVector>
-enum class Field
-{
-    Blue,
-    Red
-};
+
 
 class GameModel : public QObject
 {
     Q_OBJECT
 public:
-    explicit GameModel( int N,QObject *parent = 0);
+    explicit GameModel(ResourceManager* RM, int N,QObject *parent = 0);
     ~GameModel();
     int get_collector(Field f)const;
     int get_field(Field f,int col)const;
@@ -35,7 +31,7 @@ private:
     QVector<int> blue_fields;
     int red_collector;
     QVector<int> red_fields;
-    ResourceManager rm;
+    ResourceManager* rm;
 signals:
     void refresh_window();
     void winner(int);

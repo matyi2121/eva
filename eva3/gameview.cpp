@@ -1,12 +1,14 @@
 #include "gameview.h"
 #include <QLayoutItem>
 #include <QMessageBox>
-GameView::GameView(QGridLayout* Main_layout,int N, QWidget *parent)
-    : QWidget(parent),
+GameView::GameView(QGridLayout* Main_layout,int N, QWidget *Parent)
+    : QWidget(Parent),
+      parent(Parent),
       main_layout(Main_layout),
       n(N)
 {
-    gm = new GameModel(n,this);
+    rm = new ResourceManager;
+    gm = new GameModel(rm,n,this);
     create_board();
 }
 void GameView::show_winner(int w)
@@ -159,4 +161,5 @@ GameView::~GameView()
 {
     delete_board();
     delete gm;
+    delete rm;
 }

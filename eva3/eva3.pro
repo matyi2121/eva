@@ -24,5 +24,3 @@ HEADERS  += awari.h \
     gameview.h \
     gamemodel.h \
     resourcemanager.h
-
-FORMS    +=

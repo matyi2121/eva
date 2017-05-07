@@ -1,16 +1,15 @@
 #include "resourcemanager.h"
 #include <QFile>
 #include <QTextStream>
-ResourceManager::ResourceManager(QObject *parent) : QObject(parent)
-{
-
-}
+ResourceManager::ResourceManager(){}
 
 bool ResourceManager::save_game(int n,
-               int blue_coll,
-               QVector<int>& blue_fields,
-               int red_coll,
-               QVector<int>& red_fields)
+                                int turn,
+                                int wcm,
+                                int blue_coll,
+                                QVector<int>& blue_fields,
+                                int red_coll,
+                                QVector<int>& red_fields)
 {
     QFile file("game.sav");
     if (!file.open(QFile::WriteOnly))
@@ -18,6 +17,8 @@ bool ResourceManager::save_game(int n,
     QTextStream stream(&file);
 
     stream << n << endl;
+    stream << turn << endl;
+    stream << wcm << endl;
     stream << blue_coll << endl;
     for(int i = 0; i < n; ++i)
     {
@@ -34,10 +35,12 @@ bool ResourceManager::save_game(int n,
 }
 
 bool ResourceManager::load_game(int& n,
-               int& blue_coll,
-               QVector<int>& blue_fields,
-               int& red_coll,
-               QVector<int>& red_fields)
+                                Field& turn,
+                                bool& will_come_again,
+                                int& blue_coll,
+                                QVector<int>& blue_fields,
+                                int& red_coll,
+                                QVector<int>& red_fields)
 {
     QFile file("game.sav");
     if(!file.open(QFile::ReadOnly))
@@ -46,6 +49,26 @@ bool ResourceManager::load_game(int& n,
     QTextStream stream(&file);
 
     n = stream.readLine().toInt();
+    int t = stream.readLine().toInt();
+    if(t == 1)
+    {
+        turn = Field::Blue;
+    }
+    else
+    {
+        turn = Field::Red;
+    }
+
+    int l = stream.readLine().toInt();
+    if(l == 1)
+    {
+        will_come_again = true;
+    }
+    else
+    {
+        will_come_again = false;
+    }
+
     blue_fields.resize(n);
     red_fields.resize(n);
     blue_coll = stream.readLine().toInt();

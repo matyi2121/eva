@@ -5,6 +5,7 @@
 #include <QPushButton>
 #include <QGridLayout>
 #include "gamemodel.h"
+
 class GameView : public QWidget
 {
     Q_OBJECT
@@ -14,6 +15,7 @@ public:
 private:
     QWidget* parent;
     QGridLayout* main_layout;
+    ResourceManager* rm;
     int n;
     QPushButton* new_game;
     QPushButton* load_game;

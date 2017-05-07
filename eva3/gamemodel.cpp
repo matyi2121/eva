@@ -1,8 +1,9 @@
 #include "gamemodel.h"
 #include <QMessageBox>
-GameModel::GameModel(int N,QObject *parent)
+GameModel::GameModel(ResourceManager* RM,int N,QObject *parent)
     : QObject(parent),
-      n(N)
+      n(N),
+      rm(RM)
 {
     curr_turn = Field::Blue;
     blue_collector = 0;
@@ -210,7 +211,9 @@ bool GameModel::load_game()
 {
     int in_size = 0;
     bool ret = false;
-    if(rm.load_game(in_size,
+    if(rm->load_game(in_size,
+                    curr_turn,
+                    will_come_again,
                     blue_collector,
                     blue_fields,
                     red_collector,
@@ -230,7 +233,15 @@ bool GameModel::load_game()
 bool GameModel::save_game()
 {
     bool ret = false;
-    if(rm.save_game(n,blue_collector,blue_fields,red_collector,red_fields))
+    int turn = curr_turn == Field::Blue ? 1 : 2;
+    int wca = will_come_again == true ? 1 : 0;
+    if(rm->save_game(n,
+                     turn,
+                     wca,
+                     blue_collector,
+                     blue_fields,
+                     red_collector,
+                     red_fields))
     {
         ret = true;
     }
