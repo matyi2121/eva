@@ -18,7 +18,6 @@ private:
     QGridLayout* main_layout;
     QComboBox* size_cb;
     QPushButton* start_button;
-    QPushButton* load_button;
     const int smallest_n;
     int n;
 signals:

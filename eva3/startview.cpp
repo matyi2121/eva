@@ -18,9 +18,6 @@ StartView::StartView(QGridLayout* Main_layout, QWidget *Parent)
     start_button = new QPushButton(QObject::trUtf8("Új játék kezdése"));
     main_layout->addWidget(start_button,1,0);
 
-    load_button = new QPushButton(QObject::trUtf8("Játék betöltése"));
-    main_layout->addWidget(load_button,2,0);
-
     QObject::connect(size_cb,SIGNAL(currentIndexChanged(int)),parent,SLOT(change_n(int)));
     QObject::connect(start_button,SIGNAL(clicked()),parent,SLOT(start_game()));
 }

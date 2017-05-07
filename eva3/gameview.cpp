@@ -6,6 +6,30 @@ GameView::GameView(QGridLayout* Main_layout,int N, QWidget *parent)
       main_layout(Main_layout),
       n(N)
 {
+    gm = new GameModel(n,this);
+    create_board();
+}
+void GameView::show_winner(int w)
+{
+    QMessageBox qmsg;
+    if(w == 1)
+    {
+        qmsg.setText(QObject::trUtf8("A kék játékos nyert"));
+    }
+    else if(w == 2)
+    {
+        qmsg.setText(QObject::trUtf8("A piros játékos nyert"));
+    }
+    else
+    {
+        qmsg.setText(QObject::trUtf8("Döntetlen"));
+    }
+    qmsg.exec();
+    emit game_over();
+}
+
+void GameView::create_board()
+{
     QPushButton* tmp = new QPushButton("0");
     tmp->setStyleSheet("background-color: blue");
     main_layout->addWidget(tmp,0,0,2,1);
@@ -30,39 +54,46 @@ GameView::GameView(QGridLayout* Main_layout,int N, QWidget *parent)
     new_game = new QPushButton(QObject::trUtf8("Új játék"));
     main_layout->addWidget(new_game,2,0);
 
+    load_game = new QPushButton(QObject::trUtf8("Játék betöltése"));
+    main_layout->addWidget(load_game,2,n);
+
     save_game = new QPushButton(QObject::trUtf8("Játék mentése"));
     main_layout->addWidget(save_game,2,n+1);
 
     QObject::connect(new_game,SIGNAL(clicked()),parent,SLOT(new_game()));
+    QObject::connect(load_game,SIGNAL(clicked()),this,SLOT(load_game_caller()));
     QObject::connect(save_game,SIGNAL(clicked()),this,SLOT(save_game_caller()));
 
-    gm = new GameModel(n,this);
     QObject::connect(gm,SIGNAL(refresh_window()),this,SLOT(refresh()));
 
     QObject::connect(gm,SIGNAL(winner(int)),this,SLOT(show_winner(int)));
     QObject::connect(this,SIGNAL(game_over()),parent,SLOT(new_game()));
+    QObject::connect(gm,SIGNAL(size_changed(int)),this,SLOT(size_changed(int)));
 }
-void GameView::show_winner(int w)
+
+void GameView::delete_board()
 {
-    QMessageBox qmsg;
-    if(w == 1)
+    QLayoutItem* child;
+    while((child = main_layout->takeAt(0)) != 0)
     {
-        qmsg.setText(QObject::trUtf8("A kék játékos nyert"));
+        delete child->widget();
     }
-    else if(w == 2)
-    {
-        qmsg.setText(QObject::trUtf8("A piros játékos nyert"));
+}
+
+void GameView::load_game_caller()
+{
+    if(!gm->load_game())
+    {//küldjön signalt a model a view-nak ha szükség van átméretezésre
+        QMessageBox::warning(this,QObject::trUtf8("Hiba"),QObject::trUtf8("A játék betöltése sikertelen"));
     }
-    else
-    {
-        qmsg.setText(QObject::trUtf8("Döntetlen"));
-    }
-    qmsg.exec();
-    emit game_over();
 }
 
 void GameView::save_game_caller()
 {
+    if(!gm->save_game())
+    {
+        QMessageBox::warning(this,QObject::trUtf8("Hiba"),QObject::trUtf8("A játék mentése sikertelen"));
+    }
 }
 
 void GameView::empty_bowl()
@@ -115,12 +146,17 @@ void GameView::refresh()
     }
 }
 
+void GameView::size_changed(int N)
+{
+    //delete all
+    delete_board();
+    n = N;
+    create_board();
+    //create new board
+}
+
 GameView::~GameView()
 {
-    QLayoutItem* child;
-    while((child = main_layout->takeAt(0)) != 0)
-    {
-        delete child->widget();
-    }
+    delete_board();
     delete gm;
 }

@@ -19,13 +19,17 @@ private:
     QPushButton* load_game;
     QPushButton* save_game;
     GameModel* gm;
+    void create_board();
+    void delete_board();
 signals:
     void game_over();
 public slots:
+    void load_game_caller();
     void save_game_caller();
     void empty_bowl();
     void refresh();
     void show_winner(int);
+    void size_changed(int);
 };
 
 #endif // GAMEVIEW_H

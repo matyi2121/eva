@@ -1,5 +1,5 @@
 #include "gamemodel.h"
-
+#include <QMessageBox>
 GameModel::GameModel(int N,QObject *parent)
     : QObject(parent),
       n(N)
@@ -22,7 +22,7 @@ GameModel::~GameModel()
     //dtor
 }
 
-int GameModel::get_collector(Field f)
+int GameModel::get_collector(Field f)const
 {
     if(f == Field::Blue)
         return blue_collector;
@@ -30,12 +30,17 @@ int GameModel::get_collector(Field f)
         return red_collector;
 }
 
-int GameModel::get_field(Field f, int col)
+int GameModel::get_field(Field f, int col)const
 {
     if(f == Field::Blue)
         return blue_fields[col-1];
     else
         return red_fields[col-1];
+}
+
+int GameModel::get_size()const
+{
+    return n;
 }
 
 void GameModel::empty(int row, int col)
@@ -199,4 +204,35 @@ void GameModel::game_over_check()
         }
         emit winner(to_emit);
     }
+}
+
+bool GameModel::load_game()
+{
+    int in_size = 0;
+    bool ret = false;
+    if(rm.load_game(in_size,
+                    blue_collector,
+                    blue_fields,
+                    red_collector,
+                    red_fields))
+    {
+        if(in_size != n)
+        {
+            emit size_changed(in_size);
+            n=in_size;
+        }
+        emit refresh_window();
+        ret = true;
+    }
+    return ret;
+}
+
+bool GameModel::save_game()
+{
+    bool ret = false;
+    if(rm.save_game(n,blue_collector,blue_fields,red_collector,red_fields))
+    {
+        ret = true;
+    }
+    return ret;
 }

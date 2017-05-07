@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         awari.cpp \
     startview.cpp \
     gameview.cpp \
-    gamemodel.cpp
+    gamemodel.cpp \
+    resourcemanager.cpp
 
 HEADERS  += awari.h \
     startview.h \
     gameview.h \
-    gamemodel.h
+    gamemodel.h \
+    resourcemanager.h
 
 FORMS    +=
