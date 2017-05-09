@@ -7,7 +7,7 @@ GameView::GameView(QGridLayout* Main_layout,int N, QWidget *Parent)
       main_layout(Main_layout),
       n(N)
 {
-    rm = new ResourceManager;
+    ResourceManager* rm = new ResourceManager;
     gm = new GameModel(rm,n,this);
     create_board();
 }
@@ -161,5 +161,4 @@ GameView::~GameView()
 {
     delete_board();
     delete gm;
-    delete rm;
 }

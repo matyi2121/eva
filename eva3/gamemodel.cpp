@@ -21,7 +21,7 @@ GameModel::GameModel(ResourceManager* RM,int N,QObject *parent)
 
 GameModel::~GameModel()
 {
-    //dtor
+    delete rm;
 }
 
 int GameModel::get_collector(Field f)const

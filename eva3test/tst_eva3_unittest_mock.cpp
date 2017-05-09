@@ -82,7 +82,6 @@ void Eva3_unittest_mock::testSaveGame()
 void Eva3_unittest_mock::cleanupTestCase()
 {
     delete gm;
-    delete rm;
 }
 
 QTEST_APPLESS_MAIN(Eva3_unittest_mock)

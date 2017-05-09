@@ -15,7 +15,6 @@ public:
 private:
     QWidget* parent;
     QGridLayout* main_layout;
-    ResourceManager* rm;
     int n;
     QPushButton* new_game;
     QPushButton* load_game;
